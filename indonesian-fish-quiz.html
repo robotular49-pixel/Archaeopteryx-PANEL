@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tebak Ikan Indonesia - Indonesian Fish Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .score-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .aquarium {
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid #1e3c72;
+        }
+
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: rise 15s infinite ease-in;
+        }
+
+        .bubble:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            left: 10%;
+            animation-duration: 8s;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 20px;
+            height: 20px;
+            left: 20%;
+            animation-duration: 5s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            left: 35%;
+            animation-duration: 7s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 30px;
+            height: 30px;
+            left: 50%;
+            animation-duration: 6s;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 25px;
+            height: 25px;
+            left: 70%;
+            animation-duration: 9s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(6) {
+            width: 35px;
+            height: 35px;
+            left: 85%;
+            animation-duration: 7s;
+            animation-delay: 3s;
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: -50px;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                bottom: 100%;
+                opacity: 0;
+                transform: translateX(50px);
+            }
+        }
+
+        .fish-container {
+            position: relative;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fish {
+            font-size: 120px;
+            animation: swim 4s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+            transform-origin: center;
+        }
+
+        @keyframes swim {
+            0%, 100% {
+                transform: translateX(-30px) translateY(0px) rotate(-5deg);
+            }
+            50% {
+                transform: translateX(30px) translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .fish-question {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .seaweed {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            height: 100px;
+            background: linear-gradient(to top, #2d5016, #4a7c2f);
+            border-radius: 50% 50% 0 0;
+            animation: sway 3s ease-in-out infinite;
+        }
+
+        .seaweed:nth-child(1) {
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .seaweed:nth-child(2) {
+            left: 15%;
+            height: 120px;
+            animation-delay: 0.5s;
+        }
+
+        .seaweed:nth-child(3) {
+            right: 5%;
+            animation-delay: 1s;
+        }
+
+        .seaweed:nth-child(4) {
+            right: 15%;
+            height: 90px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes sway {
+            0%, 100% {
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+
+        .game-content {
+            padding: 40px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .choice-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .choice-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .choice-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .choice-btn.correct {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            animation: correct-pulse 0.5s;
+        }
+
+        .choice-btn.incorrect {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            animation: shake 0.5s;
+        }
+
+        .choice-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        @keyframes correct-pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-10px);
+            }
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+
+        .fun-fact {
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .fun-fact strong {
+            color: #667eea;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .results-screen {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .results-screen.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .results-title {
+            font-size: 2.5em;
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        .final-score {
+            font-size: 4em;
+            color: #667eea;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .results-message {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .trophy {
+            font-size: 100px;
+            margin: 20px 0;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .fish {
+                font-size: 80px;
+            }
+
+            .choices {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .game-content {
+                padding: 20px;
+            }
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .start-screen.hide {
+            display: none;
+        }
+
+        .start-title {
+            font-size: 2.5em;
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        .start-description {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .game-screen {
+            display: none;
+        }
+
+        .game-screen.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>🐟 Tebak Ikan Indonesia 🐟</h1>
+            <p>Indonesian River Fish Quiz</p>
+            <div class="score-board">
+                <div class="score-item">
+                    <div class="score-label">Benar</div>
+                    <div class="score-value" id="correct-score">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Salah</div>
+                    <div class="score-value" id="incorrect-score">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Total</div>
+                    <div class="score-value" id="total-score">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="start-screen" id="start-screen">
+            <div class="trophy">🏆</div>
+            <h2 class="start-title">Selamat Datang!</h2>
+            <p class="start-description">
+                Uji pengetahuan Anda tentang ikan-ikan sungai Indonesia!<br>
+                Anda akan melihat 10 ikan berbeda. Pilih jawaban yang benar untuk setiap ikan.<br>
+                <strong>Siap untuk memulai petualangan bawah air?</strong>
+            </p>
+            <button class="start-btn" onclick="startGame()">🎮 Mulai Bermain</button>
+        </div>
+
+        <div class="game-screen" id="game-screen">
+            <div class="aquarium">
+                <div class="bubbles">
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                </div>
+                <div class="seaweed"></div>
+                <div class="seaweed"></div>
+                <div class="seaweed"></div>
+                <div class="seaweed"></div>
+                <div class="fish-container">
+                    <div class="fish" id="fish-display">🐠</div>
+                </div>
+                <div class="fish-question" id="question-text">Ikan apakah ini?</div>
+            </div>
+
+            <div class="game-content">
+                <div class="progress-text" id="progress-text">Pertanyaan 1 dari 10</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 10%"></div>
+                </div>
+
+                <div class="feedback" id="feedback"></div>
+
+                <div class="choices" id="choices-container"></div>
+
+                <div class="action-buttons">
+                    <button class="btn" id="next-btn" onclick="nextQuestion()" style="display: none;">
+                        Ikan Berikutnya ➡️
+                    </button>
+                    <button class="btn btn-secondary" onclick="restartGame()">
+                        🔄 Main Lagi
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="trophy">🏆</div>
+            <h2 class="results-title">Permainan Selesai!</h2>
+            <div class="final-score" id="final-score">0/10</div>
+            <p class="results-message" id="results-message"></p>
+            <button class="btn" onclick="restartGame()">🎮 Main Lagi</button>
+        </div>
+    </div>
+
+    <script>
+        const fishDatabase = [
+            {
+                id: 1,
+                nameId: "Ikan Arwana",
+                nameEn: "Asian Arowana",
+                emoji: "🐉",
+                river: "Sungai Kapuas, Kalimantan",
+                funFact: "Ikan Arwana adalah ikan legendaris yang dipercaya membawa keberuntungan dan bisa melompat hingga 2 meter di atas permukaan air!",
+                choices: ["Ikan Arwana", "Ikan Lele", "Ikan Gabus", "Ikan Mas"]
+            },
+            {
+                id: 2,
+                nameId: "Ikan Lele",
+                nameEn: "Catfish",
+                emoji: "🐱",
+                river: "Sungai Citarum, Jawa Barat",
+                funFact: "Ikan Lele memiliki kumis (barbel) yang berfungsi sebagai sensor untuk mencari makanan di air keruh. Mereka bisa bertahan hidup di air dengan kadar oksigen rendah!",
+                choices: ["Ikan Mas", "Ikan Lele", "Ikan Nila", "Ikan Patin"]
+            },
+            {
+                id: 3,
+                nameId: "Ikan Gabus",
+                nameEn: "Snakehead Fish",
+                emoji: "🐍",
+                river: "Sungai Barito, Kalimantan Selatan",
+                funFact: "Ikan Gabus bisa bernapas di udara dan bertahan hidup di luar air hingga 4 hari! Mereka juga bisa 'berjalan' di darat untuk mencari kolam baru.",
+                choices: ["Ikan Gabus", "Ikan Toman", "Ikan Belut", "Ikan Sidat"]
+            },
+            {
+                id: 4,
+                nameId: "Ikan Mas",
+                nameEn: "Common Carp",
+                emoji: "🎏",
+                river: "Sungai Brantas, Jawa Timur",
+                funFact: "Ikan Mas telah dibudidayakan di Indonesia sejak ratusan tahun yang lalu. Mereka bisa hidup hingga 20 tahun dan tumbuh hingga 25 kg!",
+                choices: ["Ikan Nila", "Ikan Gurame", "Ikan Mas", "Ikan Tawes"]
+            },
+            {
+                id: 5,
+                nameId: "Ikan Toman",
+                nameEn: "Giant Snakehead",
+                emoji: "🦈",
+                river: "Sungai Mahakam, Kalimantan Timur",
+                funFact: "Ikan Toman adalah predator ganas yang bisa tumbuh hingga 1,5 meter! Mereka memiliki gigi tajam dan bisa melompat keluar air untuk menangkap mangsa.",
+                choices: ["Ikan Gabus", "Ikan Toman", "Ikan Baung", "Ikan Tapah"]
+            },
+            {
+                id: 6,
+                nameId: "Ikan Patin",
+                nameEn: "Pangasius",
+                emoji: "🐟",
+                river: "Sungai Musi, Sumatera Selatan",
+                funFact: "Ikan Patin memiliki kulit yang licin tanpa sisik dan bisa tumbuh hingga 15 kg. Daging putihnya yang lezat membuatnya sangat populer untuk konsumsi!",
+                choices: ["Ikan Patin", "Ikan Lele", "Ikan Dori", "Ikan Gurame"]
+            },
+            {
+                id: 7,
+                nameId: "Ikan Belida",
+                nameEn: "Royal Knifefish",
+                emoji: "🔪",
+                river: "Sungai Kampar, Riau",
+                funFact: "Ikan Belida memiliki bentuk tubuh pipih seperti pisau! Mereka aktif di malam hari dan menggunakan organ listrik untuk navigasi di air gelap.",
+                choices: ["Ikan Belida", "Ikan Sembilang", "Ikan Lidah", "Ikan Pipih"]
+            },
+            {
+                id: 8,
+                nameId: "Ikan Baung",
+                nameEn: "Asian Redtail Catfish",
+                emoji: "🦊",
+                river: "Sungai Kapuas, Kalimantan Barat",
+                funFact: "Ikan Baung memiliki ekor berwarna merah yang mencolok! Mereka adalah ikan nokturnal yang berburu di malam hari dan bisa mengeluarkan suara mendengung.",
+                choices: ["Ikan Lele", "Ikan Baung", "Ikan Patin", "Ikan Tagih"]
+            },
+            {
+                id: 9,
+                nameId: "Ikan Gurame",
+                nameEn: "Giant Gourami",
+                emoji: "🛡️",
+                river: "Sungai Ciliwung, Jakarta",
+                funFact: "Ikan Gurame memiliki organ labirin khusus yang memungkinkan mereka bernapas oksigen langsung dari udara! Mereka bisa tumbuh hingga 67 cm.",
+                choices: ["Ikan Mas", "Ikan Nila", "Ikan Gurame", "Ikan Mujair"]
+            },
+            {
+                id: 10,
+                nameId: "Ikan Jelawat",
+                nameEn: "Hampala Barb",
+                emoji: "⚡",
+                river: "Sungai Mahakam, Kalimantan Timur",
+                funFact: "Ikan Jelawat adalah perenang super cepat yang bisa berenang melawan arus deras! Mereka pemakan segala dan dikenal sangat kuat saat dipancing.",
+                choices: ["Ikan Jelawat", "Ikan Lampam", "Ikan Tengadak", "Ikan Kelabau"]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let incorrectAnswers = 0;
+        let questionOrder = [];
+        let answered = false;
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function startGame() {
+            document.getElementById('start-screen').classList.add('hide');
+            document.getElementById('game-screen').classList.add('show');
+            questionOrder = shuffleArray([...Array(fishDatabase.length).keys()]);
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScores();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const fishIndex = questionOrder[currentQuestionIndex];
+            const fish = fishDatabase[fishIndex];
+
+            document.getElementById('fish-display').textContent = fish.emoji;
+            document.getElementById('question-text').textContent = `Ikan apakah ini?`;
+
+            const progressPercent = ((currentQuestionIndex + 1) / fishDatabase.length) * 100;
+            document.getElementById('progress-fill').style.width = progressPercent + '%';
+            document.getElementById('progress-text').textContent = 
+                `Pertanyaan ${currentQuestionIndex + 1} dari ${fishDatabase.length}`;
+
+            const feedback = document.getElementById('feedback');
+            feedback.classList.remove('show', 'correct', 'incorrect');
+            feedback.innerHTML = '';
+
+            document.getElementById('next-btn').style.display = 'none';
+
+            const choicesContainer = document.getElementById('choices-container');
+            choicesContainer.innerHTML = '';
+
+            const shuffledChoices = shuffleArray(fish.choices);
+            shuffledChoices.forEach(choice => {
+                const button = document.createElement('button');
+                button.className = 'choice-btn';
+                button.textContent = choice;
+                button.onclick = () => checkAnswer(choice, fish);
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedAnswer, fish) {
+            if (answered) return;
+            answered = true;
+
+            const buttons = document.querySelectorAll('.choice-btn');
+            buttons.forEach(btn => btn.disabled = true);
+
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+
+            if (selectedAnswer === fish.nameId) {
+                correctAnswers++;
+                feedback.classList.add('correct');
+                feedback.innerHTML = `
+                    <div>✅ Benar Sekali!</div>
+                    <div style="margin-top: 10px; font-size: 0.9em;">
+                        <strong>${fish.nameId}</strong> (${fish.nameEn})
+                    </div>
+                    <div style="font-size: 0.85em; margin-top: 5px; opacity: 0.9;">
+                        📍 ${fish.river}
+                    </div>
+                    <div class="fun-fact">
+                        <strong>💡 Fakta Menarik:</strong> ${fish.funFact}
+                    </div>
+                `;
+
+                buttons.forEach(btn => {
+                    if (btn.textContent === selectedAnswer) {
+                        btn.classList.add('correct');
+                    }
+                });
+            } else {
+                incorrectAnswers++;
+                feedback.classList.add('incorrect');
+                feedback.innerHTML = `
+                    <div>❌ Kurang Tepat!</div>
+                    <div style="margin-top: 10px; font-size: 0.9em;">
+                        Jawaban yang benar: <strong>${fish.nameId}</strong> (${fish.nameEn})
+                    </div>
+                    <div style="font-size: 0.85em; margin-top: 5px; opacity: 0.9;">
+                        📍 ${fish.river}
+                    </div>
+                    <div class="fun-fact">
+                        <strong>💡 Fakta Menarik:</strong> ${fish.funFact}
+                    </div>
+                `;
+
+                buttons.forEach(btn => {
+                    if (btn.textContent === selectedAnswer) {
+                        btn.classList.add('incorrect');
+                    }
+                    if (btn.textContent === fish.nameId) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            updateScores();
+
+            if (currentQuestionIndex < fishDatabase.length - 1) {
+                document.getElementById('next-btn').style.display = 'inline-block';
+            } else {
+                setTimeout(showResults, 2000);
+            }
+        }
+
+        function updateScores() {
+            document.getElementById('correct-score').textContent = correctAnswers;
+            document.getElementById('incorrect-score').textContent = incorrectAnswers;
+            document.getElementById('total-score').textContent = correctAnswers + incorrectAnswers;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < fishDatabase.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('game-screen').classList.remove('show');
+            document.getElementById('results-screen').classList.add('show');
+
+            const percentage = (correctAnswers / fishDatabase.length) * 100;
+            document.getElementById('final-score').textContent = 
+                `${correctAnswers}/${fishDatabase.length}`;
+
+            let message = '';
+            let trophy = '🏆';
+
+            if (percentage === 100) {
+                message = '🎉 Sempurna! Anda adalah ahli ikan Indonesia!';
+                trophy = '👑';
+            } else if (percentage >= 80) {
+                message = '⭐ Luar Biasa! Pengetahuan Anda sangat baik!';
+                trophy = '🥇';
+            } else if (percentage >= 60) {
+                message = '👍 Bagus! Anda cukup mengenal ikan Indonesia!';
+                trophy = '🥈';
+            } else if (percentage >= 40) {
+                message = '📚 Lumayan! Masih ada ruang untuk belajar lebih banyak!';
+                trophy = '🥉';
+            } else {
+                message = '💪 Jangan menyerah! Coba lagi dan pelajari lebih banyak tentang ikan Indonesia!';
+                trophy = '🎯';
+            }
+
+            document.querySelector('.results-screen .trophy').textContent = trophy;
+            document.getElementById('results-message').textContent = message;
+        }
+
+        function restartGame() {
+            document.getElementById('results-screen').classList.remove('show');
+            document.getElementById('game-screen').classList.remove('show');
+            document.getElementById('start-screen').classList.remove('hide');
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScores();
+        }
+    </script>
+</body>
+</html>
