@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Aplikasi - cPanel Gratis & Fish Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .app-icon {
+            font-size: 80px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .app-title {
+            font-size: 2em;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .app-description {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .app-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .app-features li {
+            padding: 10px 0;
+            color: #555;
+            border-bottom: 1px solid #eee;
+        }
+
+        .app-features li:last-child {
+            border-bottom: none;
+        }
+
+        .app-features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .app-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .app-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+        }
+
+        .info-section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .info-section p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px 20px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .app-icon {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Portal Aplikasi</h1>
+            <p>Selamat Datang di Platform Terpadu</p>
+        </div>
+
+        <div class="apps-grid">
+            <a href="/panel" class="app-card">
+                <div class="app-icon">⚙️</div>
+                <h2 class="app-title">Pterodactyl Panel</h2>
+                <p class="app-description">
+                    Control panel gratis untuk mengelola server game dan aplikasi Anda dengan mudah.
+                </p>
+                <ul class="app-features">
+                    <li>Manajemen Server Multi-game</li>
+                    <li>Interface Modern & Intuitif</li>
+                    <li>Database MariaDB Terintegrasi</li>
+                    <li>Redis Caching</li>
+                    <li>SSL/TLS Support</li>
+                </ul>
+                <button class="app-button">Akses Panel →</button>
+            </a>
+
+            <a href="indonesian-fish-quiz.html" class="app-card">
+                <div class="app-icon">🐟</div>
+                <h2 class="app-title">Tebak Ikan Indonesia</h2>
+                <p class="app-description">
+                    Game edukatif interaktif untuk mengenal ikan-ikan sungai Indonesia.
+                </p>
+                <ul class="app-features">
+                    <li>10 Spesies Ikan Nusantara</li>
+                    <li>Animasi CSS Interaktif</li>
+                    <li>Fakta Menarik Setiap Ikan</li>
+                    <li>Sistem Skor & Progress</li>
+                    <li>Responsive Design</li>
+                </ul>
+                <button class="app-button">Main Sekarang →</button>
+            </a>
+        </div>
+
+        <div class="info-section">
+            <h2>📦 Tentang Platform Ini</h2>
+            <p>
+                Platform ini menggabungkan <strong>Pterodactyl Panel</strong> untuk manajemen server yang powerful 
+                dengan <strong>aplikasi edukatif</strong> yang menyenangkan. Semua berjalan dalam satu infrastruktur 
+                Docker yang terkelola dengan baik.
+            </p>
+            <p>
+                <strong>Pterodactyl Panel</strong> adalah control panel open-source berbasis web untuk mengelola 
+                game server seperti Minecraft, ARK, CS:GO, dan banyak lagi dengan antarmuka yang modern dan responsif.
+            </p>
+            <p>
+                <strong>Tebak Ikan Indonesia</strong> adalah game quiz edukatif yang mengajarkan tentang keanekaragaman 
+                hayati ikan air tawar Indonesia dari berbagai sungai besar seperti Kapuas, Mahakam, Barito, dan lainnya.
+            </p>
+
+            <h2 style="margin-top: 30px;">🛠️ Stack Teknologi</h2>
+            <div class="tech-stack">
+                <span class="tech-badge">Docker Compose</span>
+                <span class="tech-badge">MariaDB 10.5</span>
+                <span class="tech-badge">Redis Alpine</span>
+                <span class="tech-badge">PHP/Laravel</span>
+                <span class="tech-badge">Nginx</span>
+                <span class="tech-badge">Let's Encrypt</span>
+                <span class="tech-badge">HTML5</span>
+                <span class="tech-badge">CSS3 Animations</span>
+                <span class="tech-badge">Vanilla JavaScript</span>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>🚀 Cara Menjalankan</h2>
+            <p><strong>Untuk Pterodactyl Panel:</strong></p>
+            <ol style="color: #666; line-height: 2; margin-left: 20px; margin-bottom: 20px;">
+                <li>Edit konfigurasi di <code>docker-compose.yml</code></li>
+                <li>Ubah password database dan pengaturan APP_URL</li>
+                <li>Jalankan: <code>docker-compose up -d</code></li>
+                <li>Akses panel melalui browser di port 80/443</li>
+            </ol>
+
+            <p><strong>Untuk Fish Quiz:</strong></p>
+            <ol style="color: #666; line-height: 2; margin-left: 20px;">
+                <li>Klik tombol "Main Sekarang" di atas</li>
+                <li>Atau buka file <code>www/indonesian-fish-quiz.html</code> langsung di browser</li>
+                <li>Tidak memerlukan instalasi atau konfigurasi tambahan</li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            <p>💡 Platform Terintegrasi - cPanel Gratis & Aplikasi Edukatif</p>
+            <p>Dibuat dengan ❤️ untuk kemudahan dan pembelajaran</p>
+        </div>
+    </div>
+</body>
+</html>
